@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import CategoriaInvestimentos from './CategoriaInvestimentos';
+import '../../styles/Investimentos/NovoInvestimentoStyles.css';
 
 function NovoInvestimento() {
   const [valor, setValor] = useState("");
@@ -39,35 +40,42 @@ function NovoInvestimento() {
 
   return (
     <>
-      <h1>Adicionar novo investimento</h1>
-      <form onSubmit={handleSubmit}>
-        <CategoriaInvestimentos
-          categoriaSelecionada={categoria}
-          setCategoriaSelecionada={setCategoria}
-        />
-        <input type="hidden" value={categoria} />
-        <input 
-          type="text" 
-          value={nome} 
-          onChange={(e) => setNome(e.target.value)} 
-        />
-        <input
-          type="number"
-          step="0.01"
-          placeholder="Valor investido"
-          value={valor}
-          onChange={(e) => {
-            const num = parseFloat(e.target.value);
-            if (!isNaN(num)) {
-              setValor(num.toFixed(2));
-            } else {
-              setValor("");
-            }
-          }}
-        />
+      <div className="container">
+        <h1 id='titulo'>Adicionar novo investimento</h1>
+        <form onSubmit={handleSubmit} id='form-novo-investimento'>
+          <CategoriaInvestimentos
+            categoriaSelecionada={categoria}
+            setCategoriaSelecionada={setCategoria}
+            id="select-categoria"
+          />
+          <input type="hidden" value={categoria} />
+          <input
+            type="text"
+            value={nome}
+            placeholder='Nome do investimento'
+            onChange={(e) => setNome(e.target.value)}
+            id='nome-investimento'
+          />
+          <input
+            type="number"
+            step="0.01"
+            placeholder="Valor investido"
+            value={valor}
+            onChange={(e) => {
+              const num = parseFloat(e.target.value);
+              if (!isNaN(num) && num > 0) {
+                setValor(num.toFixed(2));
+              } else {
+                setValor("");
+              }
+            }}
+            id='input-valor'
+          />
 
-        <button onClick={() => console.log(valor)} type="submit">Adicionar</button>
-      </form>
+          <button id='btn-adicionar' onClick={() => console.log(valor)} type="submit">Adicionar</button>
+        </form>
+      </div>
+
     </>
   );
 }
